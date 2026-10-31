@@ -5,6 +5,13 @@ using NasaApodGallery.Services; // Imports our NASA API service
 // Creates the web application builder
 var builder = WebApplication.CreateBuilder(args);
 
+// Dynamically bind to the PORT environment variable provided by Railway / cloud hosts
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 // Adds MVC controllers and views
 builder.Services.AddControllersWithViews();
 
@@ -24,8 +31,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Redirects HTTP requests to HTTPS when configured
-app.UseHttpsRedirection();
+// Redirects HTTP requests to HTTPS when running locally with HTTPS configured
+if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("PORT")))
+{
+    app.UseHttpsRedirection();
+}
 
 
 // Enables routing
