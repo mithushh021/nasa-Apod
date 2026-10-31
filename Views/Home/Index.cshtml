@@ -1,0 +1,464 @@
+@model List<NasaApodGallery.Models.Apod>
+
+@{
+    ViewData["Title"] = "NASA APOD Gallery";
+    var today = DateTime.UtcNow.Date;
+    var todayStr = today.ToString("yyyy-MM-dd");
+    var start7DStr = today.AddDays(-6).ToString("yyyy-MM-dd");
+    var start14DStr = today.AddDays(-13).ToString("yyyy-MM-dd");
+
+    var isFiltered = ViewBag.IsFiltered == true;
+    var currentStart = ViewBag.StartDate as string;
+    var currentEnd = ViewBag.EndDate as string;
+
+    var isToday = isFiltered && currentStart == todayStr && currentEnd == todayStr;
+    var is7D = isFiltered && currentStart == start7DStr && currentEnd == todayStr;
+    var is14D = isFiltered && currentStart == start14DStr && currentEnd == todayStr;
+    var isAllStored = !isFiltered;
+}
+
+<div class="demo-space-page">
+    <div class="container-xl">
+
+        <!-- Status alerts (if any) -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert demo-alert alert-success alert-dismissible fade show mx-auto" role="alert">
+                <span>✓ @TempData["SuccessMessage"]</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert demo-alert alert-danger alert-dismissible fade show mx-auto" role="alert">
+                <span>✕ @TempData["ErrorMessage"]</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <!-- Hero Section matching demo_UI.png -->
+        <header class="demo-hero-section text-center">
+            
+            <!-- Pill: NASA SPACE EXPLORATION -->
+            <div class="demo-hero-badge">
+                <span>NASA SPACE EXPLORATION</span>
+            </div>
+
+            <!-- Title: Astronomy Picture of the Day -->
+            <h1 class="demo-hero-title">
+                Astronomy Picture <span class="demo-hero-gradient">of the Day</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="demo-hero-subtitle">
+                Discover the wonders of our universe through breathtaking astronomy pictures from NASA.
+            </p>
+
+            <!-- Hero Action Buttons matching demo_UI.png -->
+            <div class="demo-hero-pills d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                
+                <!-- Pictures Count Pill -->
+                <div class="demo-pill-stat">
+                    <span id="displayedCount" class="fw-semibold">@(Model.Count == 1 ? "1 Picture" : $"{Model.Count} Pictures")</span>
+                </div>
+
+                <!-- Sync NASA APOD Button -->
+                <form asp-action="SyncLatest" method="post" class="d-inline m-0" id="syncForm">
+                    <button type="submit" class="demo-pill-btn" id="syncBtn">
+                        <span class="pill-icon">↻</span>
+                        <span>Sync NASA APOD</span>
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Sleek Floating Date Selector Toolbar (Responsive & hugs contents) -->
+            <div class="demo-toolbar-wrap mt-4 mb-5">
+                <div class="demo-toolbar" id="toolbarContainer">
+                    
+                    <!-- Date Picker Form -->
+                    <form asp-action="FetchRange" method="post" class="d-flex align-items-center flex-wrap gap-2 m-0" id="fetchRangeForm">
+                        <div class="demo-date-box" id="datePickerWrapper" title="Choose date or date range">
+                            <svg class="cal-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <input type="text"
+                                   id="poshDatePicker"
+                                   name="dateInput"
+                                   class="demo-date-input"
+                                   placeholder="Pick date or range..."
+                                   autocomplete="off"
+                                   readonly />
+                            <input type="hidden" id="startDateHidden" name="startDate" value="@(ViewBag.StartDate ?? "")" />
+                            <input type="hidden" id="endDateHidden" name="endDate" value="@(ViewBag.EndDate ?? "")" />
+                        </div>
+
+                        <button type="submit" class="demo-btn-fetch" id="fetchSubmitBtn">
+                            <span>Fetch</span>
+                        </button>
+
+                        <div class="demo-preset-chips">
+                            <a href="@Url.Action("Index", "Home", new { startDate = todayStr, endDate = todayStr })"
+                               id="chipToday"
+                               class="demo-chip @(isToday ? "active" : "")"
+                               title="Show today's picture">Today</a>
+
+                            <a href="@Url.Action("Index", "Home", new { startDate = start7DStr, endDate = todayStr })"
+                               id="chip7D"
+                               class="demo-chip @(is7D ? "active" : "")"
+                               title="Show pictures from the last 7 days">7D</a>
+
+                            <a href="@Url.Action("Index", "Home", new { startDate = start14DStr, endDate = todayStr })"
+                               id="chip14D"
+                               class="demo-chip @(is14D ? "active" : "")"
+                               title="Show pictures from the last 14 days">14D</a>
+
+                            <a href="@Url.Action("Index", "Home", new { all = true })"
+                               id="chipAll"
+                               class="demo-chip @(isAllStored ? "active" : "")"
+                               title="Display all saved pictures in database">All Stored</a>
+                        </div>
+
+                        @if (ViewBag.IsFiltered == true)
+                        {
+                            <div class="demo-filter-tag">
+                                <span>Showing: <strong>@ViewBag.DateLabel</strong></span>
+                                <a href="@Url.Action("Index", "Home", new { all = true })" class="demo-filter-clear" title="Clear filter and show all">✕ All</a>
+                            </div>
+                        }
+                    </form>
+
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Bento Gallery Grid matching demo_UI.png -->
+        @if (Model.Count > 0)
+        {
+            <div class="row g-4" id="galleryGrid">
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var picture = Model[i];
+                    
+                    // Responsive column layout: prominent centered card if single image, or bento layout if multiple
+                    int pos = i % 6;
+                    string colClass = Model.Count == 1
+                        ? "col-12 col-md-10 col-lg-8 mx-auto"
+                        : pos switch
+                        {
+                            0 => "col-12 col-lg-7 col-xl-6",
+                            1 => "col-12 col-md-6 col-lg-5 col-xl-3",
+                            2 => "col-12 col-md-6 col-lg-12 col-xl-3",
+                            3 => "col-12 col-md-6 col-lg-4 col-xl-4",
+                            4 => "col-12 col-md-6 col-lg-4 col-xl-4",
+                            5 => "col-12 col-md-12 col-lg-4 col-xl-4",
+                            _ => "col-12 col-md-6 col-lg-4"
+                        };
+
+                    <div class="@colClass gallery-item"
+                         data-title="@picture.Title.ToLowerInvariant()"
+                         data-explanation="@picture.Explanation.ToLowerInvariant()">
+                        
+                        <article class="demo-card @(Model.Count == 1 ? "single-card" : "")"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#imageModal-@picture.Id"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="View @picture.Title">
+
+                            <!-- Full-bleed Image -->
+                            @if (picture.MediaType == "image" || string.IsNullOrWhiteSpace(picture.MediaType))
+                            {
+                                <img src="@picture.Url"
+                                     alt="@picture.Title"
+                                     class="demo-card-img"
+                                     loading="lazy" />
+                            }
+                            else
+                            {
+                                <div class="demo-video-wrap">
+                                    <img src="@(string.IsNullOrEmpty(picture.Hdurl) ? picture.Url : picture.Hdurl)"
+                                         alt="@picture.Title"
+                                         class="demo-card-img"
+                                         loading="lazy" />
+                                    <span class="demo-play-icon">▶</span>
+                                </div>
+                            }
+
+                            <!-- Deep gradient shadow overlay for crystal-clear readability -->
+                            <div class="demo-card-overlay"></div>
+
+                            <!-- Top Right Badge: IMAGE / VIDEO (Clean text without emoji frame) -->
+                            <div class="demo-card-badge">
+                                @if (picture.MediaType == "video")
+                                {
+                                    <span>VIDEO</span>
+                                }
+                                else
+                                {
+                                    <span>IMAGE</span>
+                                }
+                            </div>
+
+                            <!-- Bottom Left: Date & Title matching demo_UI.png -->
+                            <div class="demo-card-content">
+                                <span class="demo-card-date">@picture.Date.ToString("dd MMMM yyyy")</span>
+                                <h2 class="demo-card-title">@picture.Title</h2>
+                            </div>
+
+                        </article>
+                    </div>
+                }
+            </div>
+
+            <!-- Side-by-Side Modals for Full High-Res View & Description -->
+            @foreach (var picture in Model)
+            {
+                <div class="modal fade"
+                     id="imageModal-@picture.Id"
+                     tabindex="-1"
+                     aria-labelledby="imageTitle-@picture.Id"
+                     aria-hidden="true">
+
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content demo-modal">
+
+                            <div class="modal-body p-0">
+                                <div class="row g-0">
+
+                                    <!-- Left: Media Display (Image / Video) -->
+                                    <div class="col-12 col-lg-7 demo-modal-media-col">
+                                        @if (picture.MediaType == "video")
+                                        {
+                                            <div class="ratio ratio-16x9 demo-modal-video h-100">
+                                                <iframe src="@picture.Url" title="@picture.Title" allowfullscreen></iframe>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="demo-modal-img-container">
+                                                <img src="@(string.IsNullOrWhiteSpace(picture.Hdurl) ? picture.Url : picture.Hdurl)"
+                                                     alt="@picture.Title"
+                                                     class="demo-modal-side-img"
+                                                     loading="lazy" />
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <!-- Right: Details & Description Panel -->
+                                    <div class="col-12 col-lg-5 demo-modal-info-col">
+
+                                        <!-- Panel Header -->
+                                        <div class="demo-modal-panel-header d-flex align-items-start justify-content-between">
+                                            <div>
+                                                <span class="demo-modal-date">@picture.Date.ToString("dd MMMM yyyy")</span>
+                                                <h2 class="demo-modal-title" id="imageTitle-@picture.Id">
+                                                    @picture.Title
+                                                </h2>
+                                            </div>
+                                            <button type="button"
+                                                    class="btn-close btn-close-white ms-2"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                            </button>
+                                        </div>
+
+                                        <!-- Panel Body (Scrollable Details & Description) -->
+                                        <div class="demo-modal-panel-body">
+
+                                            <!-- Data & Details Strip -->
+                                            <div class="demo-modal-data-bar">
+                                                <div class="demo-modal-data-item">
+                                                    <span class="demo-modal-data-label">Date:</span>
+                                                    <span class="demo-modal-data-val">@picture.Date.ToString("dd MMM yyyy")</span>
+                                                </div>
+
+                                                <div class="demo-modal-data-divider"></div>
+
+                                                <div class="demo-modal-data-item">
+                                                    <span class="demo-modal-data-label">Media:</span>
+                                                    <span class="demo-modal-data-val">@(picture.MediaType == "video" ? "Video" : "Image")</span>
+                                                </div>
+
+                                                <div class="demo-modal-data-divider"></div>
+
+                                                <div class="demo-modal-data-item">
+                                                    <span class="demo-modal-data-label">Credit:</span>
+                                                    <span class="demo-modal-data-val">@(string.IsNullOrWhiteSpace(picture.Copyright) ? "NASA APOD" : picture.Copyright)</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Clean Description Box -->
+                                            <div class="demo-modal-desc-box">
+                                                <span class="demo-modal-desc-title">Description</span>
+                                                <p class="demo-modal-desc-text">@picture.CleanExplanation</p>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- Panel Footer (Actions) -->
+                                        <div class="demo-modal-panel-footer d-flex align-items-center gap-2">
+                                            <a href="@picture.Url" target="_blank" rel="noopener noreferrer" class="demo-modal-btn">
+                                                Source
+                                            </a>
+                                            @if (!string.IsNullOrWhiteSpace(picture.Hdurl) && picture.MediaType == "image")
+                                            {
+                                                <a href="@picture.Hdurl" target="_blank" rel="noopener noreferrer" class="demo-modal-btn primary">
+                                                    HD Original
+                                                </a>
+                                            }
+                                            <button type="button" class="demo-modal-btn ms-auto" data-bs-dismiss="modal">Close</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5 text-secondary">
+                <p>No pictures in gallery yet. Click <strong>Sync NASA APOD</strong> or pick a date range above.</p>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/flatpickr/flatpickr.min.js"></script>
+    <script>
+        const todayStr = "@todayStr";
+        const initialStart = "@(ViewBag.StartDate ?? "")";
+        const initialEnd = "@(ViewBag.EndDate ?? "")";
+        const isTodayLoaded = @(isToday ? "true" : "false");
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        function formatYmdToDisplay(ymd) {
+            if (!ymd) return "";
+            const p = ymd.split('-');
+            if (p.length !== 3) return ymd;
+            const day = parseInt(p[2], 10);
+            const mIdx = parseInt(p[1], 10) - 1;
+            const year = p[0];
+            const mStr = monthNames[mIdx] || p[1];
+            return `${day < 10 ? '0' + day : day} ${mStr} ${year}`;
+        }
+
+        const defaultDates = [];
+        if (initialStart) {
+            defaultDates.push(initialStart);
+            if (initialEnd && initialEnd !== initialStart) {
+                defaultDates.push(initialEnd);
+            }
+        }
+
+        // Initialize luxury cosmic Flatpickr
+        const fp = flatpickr("#poshDatePicker", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d M Y",
+            maxDate: todayStr,
+            minDate: "1995-06-16",
+            defaultDate: defaultDates.length > 0 ? defaultDates : null,
+            showMonths: 1,
+            animate: true,
+            disableMobile: "true",
+            onReady: function(selectedDates, dateStr, instance) {
+                ensureDisplayDate();
+            },
+            onClose: function(selectedDates, dateStr, instance) {
+                ensureDisplayDate();
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                syncHiddenInputs(selectedDates, instance);
+
+                if (selectedDates.length === 1 || (selectedDates.length === 2 && instance.formatDate(selectedDates[0], "Y-m-d") === instance.formatDate(selectedDates[1], "Y-m-d"))) {
+                    const picked = instance.formatDate(selectedDates[0], "Y-m-d");
+                    if (picked === todayStr) {
+                        ensureDisplayDate();
+                        return;
+                    }
+                }
+                clearActiveChips();
+            }
+        });
+
+        function ensureDisplayDate() {
+            const startVal = document.getElementById('startDateHidden')?.value;
+            const endVal = document.getElementById('endDateHidden')?.value;
+            const altInput = (fp && fp.altInput) ? fp.altInput : document.querySelector('.demo-date-box input.flatpickr-input');
+            const mainInput = document.getElementById('poshDatePicker');
+
+            if (startVal === todayStr && endVal === todayStr) {
+                if (altInput) altInput.value = "Today";
+                if (mainInput) mainInput.value = "Today";
+                setActiveChip('chipToday');
+            } else if (startVal && endVal && startVal === endVal) {
+                const formatted = formatYmdToDisplay(startVal);
+                if (altInput) altInput.value = formatted;
+                if (mainInput) mainInput.value = startVal;
+            } else if (startVal && endVal) {
+                const formatted = formatYmdToDisplay(startVal) + " to " + formatYmdToDisplay(endVal);
+                if (altInput) altInput.value = formatted;
+                if (mainInput) mainInput.value = startVal + " to " + endVal;
+            }
+        }
+
+        // Run ensureDisplayDate across multiple cycles so Flatpickr never wipes it
+        setTimeout(ensureDisplayDate, 30);
+        setTimeout(ensureDisplayDate, 150);
+        setTimeout(ensureDisplayDate, 350);
+
+        function setActiveChip(chipId) {
+            document.querySelectorAll('.demo-chip').forEach(c => c.classList.remove('active'));
+            const target = document.getElementById(chipId);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        function clearActiveChips() {
+            document.querySelectorAll('.demo-chip').forEach(c => c.classList.remove('active'));
+        }
+
+        function syncHiddenInputs(selectedDates, instance) {
+            if (selectedDates.length === 1) {
+                const singleDate = instance.formatDate(selectedDates[0], "Y-m-d");
+                document.getElementById('startDateHidden').value = singleDate;
+                document.getElementById('endDateHidden').value = singleDate;
+            } else if (selectedDates.length === 2) {
+                document.getElementById('startDateHidden').value = instance.formatDate(selectedDates[0], "Y-m-d");
+                document.getElementById('endDateHidden').value = instance.formatDate(selectedDates[1], "Y-m-d");
+            }
+        }
+
+        // Fast submit visual feedback
+        document.getElementById('fetchRangeForm')?.addEventListener('submit', function () {
+            const btn = document.getElementById('fetchSubmitBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+            }
+        });
+
+        document.getElementById('syncForm')?.addEventListener('submit', function () {
+            const btn = document.getElementById('syncBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Syncing...';
+            }
+        });
+    </script>
+}

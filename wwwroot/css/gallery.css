@@ -1,0 +1,1164 @@
+/* ========================================================
+   NASA APOD GALLERY - UI DESIGN MATCHING demo_UI.png
+   ======================================================== */
+
+html {
+    min-height: 100%;
+}
+
+body.nasa-body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #060814;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================================
+   TOP NAVBAR MATCHING demo_UI.png
+   ======================================================== */
+
+.nasa-navbar {
+    background: rgba(8, 11, 26, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nasa-brand {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.nasa-brand:hover {
+    color: #ffffff;
+}
+
+.brand-icon {
+    color: #c084fc;
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.7));
+    font-size: 18px;
+}
+
+.brand-text {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.nasa-navbar .navbar-nav .nav-link,
+.nasa-navbar .nav-link,
+.nasa-nav-link {
+    color: #cbd5e1 !important;
+    font-size: 14.5px !important;
+    font-weight: 500 !important;
+    padding: 6px 16px !important;
+    position: relative !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    opacity: 0.85;
+}
+
+.nasa-navbar .navbar-nav .nav-link:hover,
+.nasa-navbar .nav-link:hover,
+.nasa-nav-link:hover {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.nasa-navbar .navbar-nav .nav-link.active,
+.nasa-navbar .nav-link.active,
+.nasa-nav-link.active {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+.nasa-navbar .navbar-nav .nav-link.active::after,
+.nasa-navbar .nav-link.active::after,
+.nasa-nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 16px;
+    right: 16px;
+    height: 2.5px;
+    background: #8b5cf6;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #8b5cf6;
+}
+
+.external-icon-svg {
+    display: inline-block;
+    vertical-align: -1px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nasa-nav-link:hover .external-icon-svg {
+    opacity: 1;
+    transform: translate(1px, -1px);
+}
+
+.nasa-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nasa-toggler .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ========================================================
+   MAIN COSMIC PAGE BACKGROUND MATCHING demo_UI.png
+   ======================================================== */
+
+.nasa-main {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.demo-space-page {
+    width: 100%;
+    flex: 1;
+    background-color: #060814;
+    background-image: 
+        radial-gradient(ellipse 900px 600px at 95% 15%, rgba(147, 51, 234, 0.26) 0%, rgba(126, 34, 206, 0.12) 35%, transparent 70%),
+        radial-gradient(ellipse 700px 500px at 0% 30%, rgba(37, 99, 235, 0.22) 0%, rgba(30, 58, 138, 0.1) 40%, transparent 70%),
+        radial-gradient(circle at 50% 12%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 40px 60px, #ffffff, transparent),
+        radial-gradient(2px 2px at 180px 120px, #e2e8f0, transparent),
+        radial-gradient(1.5px 1.5px at 320px 220px, #ffffff, transparent),
+        radial-gradient(1px 1px at 480px 140px, #cbd5e1, transparent),
+        radial-gradient(2px 2px at 700px 280px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 840px 90px, #c084fc, transparent),
+        radial-gradient(2px 2px at 980px 180px, #ffffff, transparent),
+        radial-gradient(1px 1px at 1140px 110px, #e2e8f0, transparent),
+        radial-gradient(2px 2px at 1300px 240px, #ffffff, transparent);
+    color: #ffffff;
+    padding: 55px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Atmospheric planet curve on left matching demo_UI.png */
+.demo-space-page::before {
+    content: "";
+    position: absolute;
+    top: -140px;
+    left: -220px;
+    width: 680px;
+    height: 680px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.22) 0%, rgba(37, 99, 235, 0.12) 35%, rgba(6, 8, 20, 0) 70%);
+    box-shadow: inset -15px -15px 50px rgba(56, 189, 248, 0.35), 0 0 80px rgba(56, 189, 248, 0.25);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ========================================================
+   HERO SECTION MATCHING demo_UI.png
+   ======================================================== */
+
+.demo-hero-section {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 25px;
+}
+
+.demo-hero-badge {
+    display: inline-block;
+    background: rgba(147, 51, 234, 0.18);
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    color: #d8b4fe;
+    padding: 7px 22px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.18);
+}
+
+.demo-hero-title {
+    font-size: clamp(34px, 5.5vw, 56px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.demo-hero-gradient {
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 45%, #e879f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.demo-hero-subtitle {
+    color: #cbd5e1;
+    font-size: 15px;
+    max-width: 680px;
+    margin: 0 auto 28px;
+    line-height: 1.55;
+    font-weight: 400;
+}
+
+/* ========================================================
+   HERO ACTION PILLS MATCHING demo_UI.png
+   ======================================================== */
+
+.demo-hero-pills {
+    margin-bottom: 30px;
+}
+
+.demo-pill-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26, 23, 64, 0.75);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    color: #ffffff;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-size: 14px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.demo-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(67, 56, 202, 0.6);
+    border: 1px solid rgba(167, 139, 250, 0.4);
+    color: #e0e7ff;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(14px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(67, 56, 202, 0.3);
+}
+
+.demo-pill-btn:hover {
+    background: rgba(79, 70, 229, 0.85);
+    border-color: #c084fc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.45);
+    color: #ffffff;
+}
+
+.pill-icon {
+    font-size: 14px;
+    color: #c4b5fd;
+}
+
+/* ========================================================
+   DATE SELECTOR & FILTER TOOLBAR
+   ======================================================== */
+
+.demo-toolbar-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+    margin: 0 auto 36px;
+}
+
+.demo-toolbar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    background: rgba(14, 18, 40, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(167, 139, 250, 0.28);
+    border-radius: 14px;
+    padding: 6px 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.12);
+    transition: all 0.3s ease;
+}
+
+.demo-date-box,
+#datePickerWrapper {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(8, 11, 24, 0.85) !important;
+    border: 1px solid rgba(167, 139, 250, 0.3) !important;
+    border-radius: 9px !important;
+    padding: 6px 12px !important;
+    gap: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.demo-date-box:hover,
+.demo-date-box:focus-within,
+#datePickerWrapper:focus-within {
+    border-color: #c084fc !important;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.35) !important;
+}
+
+.cal-icon-svg {
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(165, 180, 252, 0.6));
+}
+
+/* Force Flatpickr text inputs to NEVER show a white background */
+.demo-date-box input,
+.demo-date-box input[type="text"],
+.demo-date-box .flatpickr-input,
+.demo-date-box input.flatpickr-input,
+.demo-date-box input.form-control,
+.demo-date-box .input,
+input.demo-date-input,
+.demo-date-input {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+    font-family: inherit !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+    width: 215px !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    line-height: normal !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+.demo-date-box input:focus,
+.demo-date-box input:active,
+.demo-date-box input:hover,
+.demo-date-box .flatpickr-input:focus,
+.demo-date-box .flatpickr-input:active,
+.demo-date-box input.form-control:focus,
+.demo-date-box input.form-control:active,
+.demo-date-box input.form-control[readonly] {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+}
+
+.demo-date-box input::placeholder,
+.demo-date-box .flatpickr-input::placeholder {
+    color: #94a3b8 !important;
+    opacity: 0.8 !important;
+}
+
+.demo-btn-fetch {
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.demo-btn-fetch:hover {
+    background: linear-gradient(135deg, #8b5cf6, #4f46e5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.45);
+}
+
+.demo-preset-chips {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.demo-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94a3b8;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.demo-chip:hover {
+    background: rgba(167, 139, 250, 0.18);
+    border-color: rgba(167, 139, 250, 0.5);
+    color: #ffffff;
+}
+
+/* Distinct glowing purple border for active / selected state */
+.demo-chip.active {
+    background: rgba(124, 58, 237, 0.32) !important;
+    border: 1.5px solid #c084fc !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.55), inset 0 0 8px rgba(168, 85, 247, 0.25) !important;
+}
+
+.demo-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(124, 58, 237, 0.22);
+    border: 1px solid rgba(167, 139, 250, 0.4);
+    color: #c4b5fd;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    gap: 6px;
+}
+
+.demo-filter-clear {
+    color: #f87171;
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 3px;
+    transition: color 0.15s;
+}
+
+.demo-filter-clear:hover {
+    color: #ef4444;
+}
+
+/* Responsive Toolbar Rules */
+@media (max-width: 991px) {
+    .demo-toolbar {
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .demo-toolbar-wrap {
+        padding: 0 10px;
+        margin-bottom: 28px;
+    }
+    
+    .demo-toolbar {
+        width: 100%;
+        max-width: 580px;
+        padding: 10px;
+    }
+    
+    #fetchRangeForm {
+        width: 100%;
+        justify-content: center;
+        gap: 8px !important;
+    }
+
+    .demo-filter-tag {
+        margin-top: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .demo-toolbar {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 10px;
+        border-radius: 14px;
+    }
+
+    #fetchRangeForm {
+        flex-direction: column;
+        align-items: stretch !important;
+        width: 100%;
+        gap: 10px !important;
+    }
+
+    .demo-date-box,
+    #datePickerWrapper {
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    .demo-date-box input,
+    .demo-date-input {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    .demo-btn-fetch {
+        width: 100%;
+        padding: 9px;
+    }
+
+    .demo-preset-chips {
+        display: flex !important;
+        width: 100%;
+        justify-content: space-between;
+        gap: 6px;
+    }
+
+    .demo-chip {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 4px;
+        font-size: 11.5px;
+    }
+}
+
+/* ========================================================
+   BENTO GALLERY CARD MATCHING demo_UI.png
+   With Glowing Gradient Border and Neon Aura
+   ======================================================== */
+
+.demo-card {
+    position: relative;
+    height: 310px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0d1226;
+    border: 2px solid rgba(168, 85, 247, 0.55);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.45),
+                0 0 35px rgba(99, 102, 241, 0.25),
+                0 14px 34px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.demo-card.single-card {
+    height: 400px;
+}
+
+.demo-card:hover {
+    transform: translateY(-6px);
+    border-color: #c084fc;
+    box-shadow: 0 0 32px rgba(168, 85, 247, 0.75),
+                0 0 65px rgba(99, 102, 241, 0.5),
+                0 22px 48px rgba(0, 0, 0, 0.75);
+}
+
+.demo-card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.demo-card:hover .demo-card-img {
+    transform: scale(1.05);
+}
+
+.demo-video-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.demo-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(124, 58, 237, 0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 16px;
+    z-index: 3;
+    padding-left: 3px;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+}
+
+.demo-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(6, 8, 20, 0.2) 0%,
+        rgba(6, 8, 20, 0.05) 30%,
+        rgba(6, 8, 20, 0.55) 65%,
+        rgba(6, 8, 20, 0.94) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+.demo-card-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #c4b5fd;
+    letter-spacing: 1.2px;
+    z-index: 5;
+    text-transform: uppercase;
+}
+
+.badge-icon {
+    font-size: 11px;
+}
+
+.demo-card-content {
+    position: absolute;
+    bottom: 22px;
+    left: 24px;
+    right: 24px;
+    z-index: 3;
+}
+
+.demo-card-date {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #a5b4fc;
+    margin-bottom: 6px;
+    letter-spacing: 0.2px;
+}
+
+.demo-card-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* ========================================================
+   SIDE-BY-SIDE MODAL LIGHTBOX STYLES
+   ======================================================== */
+
+.demo-modal {
+    background: #0d1226;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(124, 58, 237, 0.25);
+    overflow: hidden;
+}
+
+.demo-modal-media-col {
+    background: #050713;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+}
+
+.demo-modal-img-container {
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: radial-gradient(circle at center, rgba(30, 27, 75, 0.3) 0%, rgba(5, 7, 19, 0.95) 75%);
+}
+
+.demo-modal-side-img {
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease;
+}
+
+.demo-modal-video {
+    width: 100%;
+    min-height: 450px;
+}
+
+.demo-modal-info-col {
+    background: #0b0f24;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    min-height: 450px;
+    max-height: 80vh;
+}
+
+.demo-modal-panel-header {
+    padding: 22px 24px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(14, 18, 40, 0.5);
+}
+
+.demo-modal-date {
+    display: inline-block;
+    font-size: 11.5px;
+    color: #c084fc;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.demo-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.demo-modal-panel-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+/* Custom sleek scrollbar for modal details */
+.demo-modal-panel-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.demo-modal-panel-body::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.demo-modal-panel-body::-webkit-scrollbar-thumb {
+    background: rgba(167, 139, 250, 0.3);
+    border-radius: 3px;
+}
+
+.demo-modal-panel-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(167, 139, 250, 0.6);
+}
+
+/* Data & Details Strip */
+.demo-modal-data-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 10px 14px;
+    background: rgba(18, 22, 50, 0.65);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.demo-modal-data-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.demo-modal-data-label {
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.demo-modal-data-val {
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+.demo-modal-data-divider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Clean Description Box */
+.demo-modal-desc-box {
+    background: rgba(14, 18, 42, 0.7);
+    border: 1px solid rgba(167, 139, 250, 0.16);
+    border-radius: 12px;
+    padding: 16px 18px;
+}
+
+.demo-modal-desc-title {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #a78bfa;
+    margin-bottom: 8px;
+}
+
+.demo-modal-desc-text {
+    color: #cbd5e1;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Panel Footer */
+.demo-modal-panel-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(10, 14, 34, 0.75);
+}
+
+.demo-modal-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.demo-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+.demo-modal-btn.primary {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #ffffff;
+}
+
+.demo-modal-btn.primary:hover {
+    background: #8b5cf6;
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.5);
+}
+
+@media (max-width: 991.98px) {
+    .demo-modal-info-col {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        max-height: none;
+    }
+
+    .demo-modal-img-container {
+        min-height: 320px;
+        max-height: 50vh;
+    }
+
+    .demo-modal-side-img {
+        max-height: 48vh;
+    }
+}
+
+/* ========================================================
+   COSMIC FLATPICKR CALENDAR THEME
+   Customized luxury dark cosmic palette matching theme
+   ======================================================== */
+
+.flatpickr-calendar {
+    background: #0b0f24 !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(167, 139, 250, 0.35) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(124, 58, 237, 0.3) !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    color: #f8fafc !important;
+    padding: 12px 14px 14px !important;
+    width: 325px !important;
+}
+
+.flatpickr-calendar.arrowTop:before,
+.flatpickr-calendar.arrowTop:after {
+    border-bottom-color: #0b0f24 !important;
+}
+
+.flatpickr-calendar.arrowBottom:before,
+.flatpickr-calendar.arrowBottom:after {
+    border-top-color: #0b0f24 !important;
+}
+
+.flatpickr-months {
+    background: transparent !important;
+    padding: 4px 0 10px !important;
+    position: relative !important;
+}
+
+.flatpickr-months .flatpickr-month {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    height: 40px !important;
+}
+
+.flatpickr-current-month {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 4px 0 6px !important;
+    font-size: 14px !important;
+    color: #ffffff !important;
+    position: static !important;
+    width: 100% !important;
+    left: 0 !important;
+}
+
+/* Beautiful custom month dropdown eliminating the macOS default OS dropdown */
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: rgba(18, 24, 52, 0.95) !important;
+    background-color: rgba(18, 24, 52, 0.95) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(167, 139, 250, 0.38) !important;
+    border-radius: 8px !important;
+    padding: 5px 28px 5px 12px !important;
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    line-height: 1.2 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.2s ease !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c084fc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 8px center !important;
+    background-size: 12px !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover,
+.flatpickr-current-month .flatpickr-monthDropdown-months:focus {
+    border-color: #c084fc !important;
+    background-color: rgba(28, 36, 75, 0.98) !important;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.4) !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months option,
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+    background: #0d1226 !important;
+    background-color: #0d1226 !important;
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+    padding: 8px 12px !important;
+}
+
+/* Year wrapper & input */
+.flatpickr-current-month .numInputWrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    background: rgba(18, 24, 52, 0.95) !important;
+    border: 1px solid rgba(167, 139, 250, 0.38) !important;
+    border-radius: 8px !important;
+    padding: 2px 4px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.2s ease !important;
+}
+
+.flatpickr-current-month .numInputWrapper:hover,
+.flatpickr-current-month .numInputWrapper:focus-within {
+    border-color: #c084fc !important;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.4) !important;
+}
+
+.flatpickr-current-month input.cur-year {
+    color: #c084fc !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 3px 2px !important;
+    outline: none !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowUp,
+.flatpickr-current-month .numInputWrapper span.arrowDown {
+    border-color: #a5b4fc !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowUp:hover,
+.flatpickr-current-month .numInputWrapper span.arrowDown:hover {
+    background: rgba(167, 139, 250, 0.25) !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowUp:after {
+    border-bottom-color: #c084fc !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {
+    border-top-color: #c084fc !important;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    color: #c084fc !important;
+    fill: #c084fc !important;
+    padding: 6px !important;
+    border-radius: 8px !important;
+    top: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+}
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+    fill: #c084fc !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+    background: rgba(168, 85, 247, 0.25) !important;
+    color: #ffffff !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    fill: #ffffff !important;
+}
+
+.flatpickr-weekdays {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+span.flatpickr-weekday {
+    color: #7c8ba1 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+}
+
+.flatpickr-days {
+    width: 100% !important;
+}
+
+.dayContainer {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
+.flatpickr-day {
+    color: #e2e8f0 !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border: none !important;
+    height: 38px !important;
+    line-height: 38px !important;
+    max-width: 38px !important;
+    transition: all 0.15s ease !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(124, 58, 237, 0.3) !important;
+    color: #ffffff !important;
+}
+
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+    color: #3b4252 !important;
+}
+
+.flatpickr-day.today {
+    border: 1px solid #818cf8 !important;
+    color: #c084fc !important;
+    background: rgba(129, 140, 248, 0.1) !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: linear-gradient(135deg, #7c3aed, #6366f1) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.65) !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+}
+
+.flatpickr-day.inRange {
+    background: rgba(124, 58, 237, 0.28) !important;
+    color: #e0e7ff !important;
+    border-radius: 0 !important;
+    box-shadow: -5px 0 0 rgba(124, 58, 237, 0.28), 5px 0 0 rgba(124, 58, 237, 0.28) !important;
+}
+
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+    color: rgba(255, 255, 255, 0.12) !important;
+    background: transparent !important;
+    cursor: not-allowed !important;
+}
+
+/* Footer matching demo */
+.nasa-footer {
+    background: #050713;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 35px 0;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.footer-title {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}

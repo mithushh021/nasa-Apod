@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - NASA APOD Gallery</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet"
+          href="~/lib/flatpickr/flatpickr.min.css" />
+
+    <!-- Application CSS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <!-- NASA gallery CSS -->
+    <link rel="stylesheet"
+          href="~/css/gallery.css"
+          asp-append-version="true" />
+</head>
+
+<body class="nasa-body">
+
+    <!-- Navigation bar matching demo_UI.png -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark nasa-navbar" data-bs-theme="dark">
+            <div class="container-xl">
+
+                <!-- Website brand: ✦ NASA APOD -->
+                <a class="navbar-brand nasa-brand"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    <span class="brand-icon">✦</span>
+                    <span class="brand-text">NASA APOD</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <button class="navbar-toggler nasa-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#nasaNavigation"
+                        aria-controls="nasaNavigation"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation links: Home (Gallery) | NASA APOD (Official Portal) -->
+                <div class="collapse navbar-collapse"
+                     id="nasaNavigation">
+
+                    <ul class="navbar-nav ms-auto align-items-center gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link nasa-nav-link active"
+                               asp-controller="Home"
+                               asp-action="Index"
+                               id="navLinkHome">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nasa-nav-link external-link"
+                               href="https://apod.nasa.gov/apod/astropix.html"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               id="navLinkApod"
+                               title="Open Official NASA APOD Portal">
+                                NASA APOD
+                                <svg class="external-icon-svg ms-1" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content without an extra Bootstrap container -->
+    <main class="nasa-main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="nasa-footer">
+        <div class="container">
+
+            <div class="row gy-4 align-items-start">
+
+                <!-- Footer branding -->
+                <div class="col-12 col-md-6">
+                    <h5 class="footer-title">
+                        ✦ NASA <span class="brand-accent">APOD</span>
+                    </h5>
+
+                    <p class="footer-description">
+                        Explore the beauty of the universe through
+                        NASA's Astronomy Picture of the Day.
+                    </p>
+                </div>
+
+                <!-- Footer links -->
+                <div class="col-12 col-md-6 text-md-end">
+                    <h6 class="footer-heading">
+                        Quick Links
+                    </h6>
+
+                    <a class="footer-link"
+                       asp-controller="Home"
+                       asp-action="Index">
+                        Home
+                    </a>
+
+                    <a class="footer-link"
+                       href="https://science.nasa.gov/apod/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Official NASA APOD
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <span>
+                    &copy; @DateTime.Now.Year NASA APOD Gallery
+                </span>
+
+                <span>
+                    Astronomy images and information: NASA APOD
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
